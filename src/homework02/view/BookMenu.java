@@ -1,6 +1,7 @@
 package homework02.view;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
@@ -37,8 +38,7 @@ public class BookMenu {
 
 	
 	// 신규 책 받아오기
-	public List<String> insertBook() {
-		List<String> bList = new ArrayList<String>();
+	public String[] insertBook() {
 		System.out.println("\n == 신규 도서 등록 == \n");
 		System.out.println("도서 제목 : ");
 		String bookName = sc.nextLine();
@@ -47,10 +47,8 @@ public class BookMenu {
 		System.out.println("카테고리 : ");
 		String bookCategory = sc.nextLine();
 		
-		bList.add(bookName);
-		bList.add(bookWriter);
-		bList.add(bookCategory);
-		return bList;
+		String[] str = {bookName, bookWriter, bookCategory};
+		return str;
 	}
 
 
@@ -96,31 +94,10 @@ public class BookMenu {
 		return bValue;
 	}
 
-//	// 무엇을 수정할지
-//	public int whatModify() {
-//		System.out.println("\n == 도서 코드 확인 완료 == \n");
-//		
-//		int modi = 0;
-//		while(true) {
-//			System.out.println("1. 도서 제목 변경");
-//			System.out.println("2. 도서 작가 변경");
-//			System.out.println("3. 도서 카테고리 변경");
-//			System.out.println("0. 메인메뉴로 돌아가기");
-//			System.out.println("번호 선택 : ");
-//			
-//			modi = Integer.parseInt(sc.nextLine());	
-//			
-//			switch(modi) {
-//			case 1: case 2: case 3: case 0: return modi;
-//			default: System.out.println("잘못 입력하셨습니다. 다시 입력해주세요");
-//			}
-//		}
-//	}
-
 	// 수정정보 입력
-	public List<String> inputUpdate() {
+	public String[] inputUpdate() {
 		List<String> bList = new ArrayList<String>();
-		System.out.println("== 수정 정보 입력 ==");
+		System.out.println("\n == 수정 정보 입력 == \n");
 		System.out.println("도서 제목 : ");
 		String bookName = sc.nextLine();
 		System.out.println("작가이름 : ");
@@ -128,18 +105,25 @@ public class BookMenu {
 		System.out.println("카테고리 : ");
 		String bookCategory = sc.nextLine();
 		
-		bList.add(bookName);
-		bList.add(bookWriter);
-		bList.add(bookCategory);
-		return bList;
+		String[] str = {bookName, bookWriter, bookCategory};
+		return str;
 	}
 
 	// 삭제 되묻기
-	public char deleteBook(String string) {
-		System.out.println(string);
+	public char deleteBook(HashMap<String, Object> book) {
+		System.out.println("도서코드 : " + book.get("key") + ", 도서제목 : " + book.get("bookName") 
+		+ ", 작가 : " + book.get("bookWriter") + ", 카테고리 : " + book.get("category"));
 		System.out.println("위 도서를 삭제 하시겠습니까(Y/N) : ");
 		char yn = sc.nextLine().toUpperCase().charAt(0);
 		return yn;
+	}
+
+
+	// 책 보기
+	public void bookView(HashMap<String, Object> book) {
+		System.out.println("도서코드 : " + book.get("key") + ", 도서제목 : " + book.get("bookName") 
+			+ ", 작가 : " + book.get("bookWriter") + ", 카테고리 : " + book.get("category"));
+		
 	}
 
 }
