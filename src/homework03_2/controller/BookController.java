@@ -96,26 +96,11 @@ public class BookController {
 		boolean anyMatch = bStr.anyMatch(k -> k.get("코드").equals(bKey));// key 유무 체크
 		
 		if(anyMatch) {
-			int changeB = menu.whatChange();
-			Stream<HashMap<String, Object>> bStr2 = bList.stream();
-			switch(changeB) {
-			case 1:
-				String bChange1 = menu.changeValue(); // 검색 단어 받아오기
-				bStr2.filter(key -> key.get("코드").equals(bKey)).forEach(bV -> bV.put("제목",bChange1));
-				break;
-				
-			case 2:
-				String bChange2 = menu.changeValue(); // 검색 단어 받아오기
-				bStr2.filter(key -> key.get("코드").equals(bKey)).forEach(bV -> bV.put("작가",bChange2));
-				break;
+			Stream<HashMap<String, Object>> bStr1 = bList.stream();
+			String[] changeB = menu.whatChange();
 			
-			case 3:
-				String bChange3 = menu.changeValue(); // 검색 단어 받아오기
-				bStr2.filter(key -> key.get("코드").equals(bKey)).forEach(bV -> bV.put("카테고리",bChange3));
-				break;
+			bStr1.filter(key -> key.get("코드").equals(bKey)).forEach(b -> {b.put("제목",changeB[0]);b.put("작가",changeB[1]);b.put("카테고리",changeB[2]);});
 				
-			case 0: return ;
-			}
 		} else {
 			menu.displayError("조회 결과가 없습니다.");
 		}
@@ -131,10 +116,10 @@ public class BookController {
 			bStr2.filter(e -> e.get("코드").equals(bKey))
 			.forEach(b -> System.out.println("도서코드 : " + b.get("코드") + " / 제목 : " + b.get("제목")
 			+ " / 작가 : " +  b.get("작가") + " / 카테고리 : " + b.get("카테고리"))); // 책정보 확인
+			
 			char yn = menu.deleteBook(); // 정말 삭제할것인지 체크
 			if(yn == 'Y' ||  yn == 'y') {
-				Stream<HashMap<String, Object>> bStr3 = bList.stream();
-				bStr3.filter(e -> e.get("코드").equals(bKey)).collect(Collectors.toList()).forEach(b -> {bList.remove(b);});
+				bList.removeIf(e -> e.get("코드").equals(bKey));
 				menu.displaySuccess("도서정보가 삭제되었습니다.");
 			} else if(yn == 'N' || yn == 'n') {
 				menu.displaySuccess("삭제가 취소되었습니다.");
@@ -146,8 +131,5 @@ public class BookController {
 		}
 		
 	}
-	
-	
-	
 	
 }

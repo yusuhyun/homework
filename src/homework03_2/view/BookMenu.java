@@ -102,30 +102,17 @@ public class BookMenu {
 		return bValue;
 	}
 
-	// 변경사항 선택
-	public int whatChange() {
-		int changeB = 0;
-		while(true) {
-			System.out.println("\n=== 변경사항 선택 ===\n");
-			System.out.println("1. 도서제목 변경");
-			System.out.println("2. 작가 변경");
-			System.out.println("3. 카테고리 변경");
-			System.out.println("0. 메인으로 돌아가기");
-			System.out.print("번호 선택 : ");
-			changeB = Integer.parseInt(sc.nextLine());
-			
-			switch(changeB) {
-			case 1:  case 2: case 3: case 0: return changeB;
-			default: displayError("잘못 입력하셨습니다. 다시 입력해주세요");
-			}
-		}
-	}
-
 	// 변경사항 입력
-	public String changeValue() {
-		System.out.println("변경값 : ");
-		String bChange = sc.nextLine();
-		return bChange;
+	public String[] whatChange() {
+			System.out.println("\n=== 변경사항 입력 ===\n");
+			System.out.println("변경된 제목을 입력해 주세요 : ");
+			String change1 = sc.nextLine();
+			System.out.println("변경된 작가를 입력해 주세요 : ");
+			String change2 = sc.nextLine();
+			System.out.println("변경된 카테고리를 입력해 주세요 : ");
+			String change3 = sc.nextLine();
+			String[] changeB = {change1, change2, change3};
+			return changeB;
 	}
 
 	// 삭제 확인
@@ -134,14 +121,6 @@ public class BookMenu {
 		char yn = sc.nextLine().toUpperCase().charAt(0);
 		return yn;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 }
