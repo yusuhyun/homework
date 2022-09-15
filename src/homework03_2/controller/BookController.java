@@ -7,7 +7,6 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import homework03.vo.Book;
 import homework03_2.view.BookMenu;
 
 
@@ -15,10 +14,12 @@ public class BookController {
 
 	private BookMenu menu = new BookMenu();
 	List<HashMap<String, Object>> bList = new ArrayList<HashMap<String, Object>>(); // 책 담을 객체
-	
+	List<Object> bookList = new ArrayList<>();
 	// 신규도서 생성
 	public void insertBook() {
+		List<HashMap<String, Object>> bList1 = new ArrayList<HashMap<String, Object>>();
 		HashMap<String, Object> book = new HashMap<>();
+		Stream<HashMap<String, Object>> bStr = bList.stream(); 
 		String bKey = UUID.randomUUID().toString();// key값 랜덤 코드 생성
 		String[] bk = menu.insertBook();
 		book.put("코드",bKey);
@@ -26,7 +27,12 @@ public class BookController {
 		book.put("작가",bk[1]);
 		book.put("카테고리",bk[2]);
 		bList.add(book);
-		
+//		bList = Stream.<HashMap<String, Object>>builder().add(book).build().collect(Collectors.toList());
+//		bookList = Stream.builder().concat(bList.stream(),bList1.stream()).collect(Collectors.toList());
+//		bookList = (List<Object>) Stream.concat(bList.stream(), Stream.of(bList)).collect(Collectors.toList());
+//		System.out.println(book);
+//		System.out.println(bList);
+//		System.out.println(bookList);
 		menu.displaySuccess("신규 도서가 등록되었습니다.");
 	}
 
