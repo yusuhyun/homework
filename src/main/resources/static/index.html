@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+	.bookWrap{
+		width : 800px;
+		margin: 0 auto;
+		border: 1px dotted cornflowerblue; border-radius: 10px;
+	} 
+	h1{
+		text-align: center; margin-bottom: 50px;
+	}
+	table,tr,th,td{
+		border-collapse:collapse;
+		border: 1px dotted cornflowerblue; text-align: center;
+	}
+	table tr td:nth-of-type(1){width: 250px;}
+	table tr td:nth-of-type(2){width: 180px;}
+	table tr td:nth-of-type(3){width: 100px;}
+	table tr td:nth-of-type(4){width: 100px;}
+	dt{
+		margin: 40px 0 10px;font-size: 18px;
+	}
+	dd{
+		font-size: 15px; 
+	}
+	input{
+		border : 1px solid cornflowerblue; height: 20px;
+	}
+	.btn{
+		display: inline-block; width: 100px; height: 25px; border-radius: 5px;
+		text-align: center; background-color: cornflowerblue; color: #fff; line-height: 25px;
+		margin: 10px 2px;
+	}
+	.btn:hover{
+		cursor: pointer;
+	}
+</style>
+</head>
+<body>
+	
+	<div class="bookWrap">
+		<h1>도서관리 프로그램</h1>
+		<ul>
+			<dt>도서 전체리스트 조회</dt>
+			<dd><div id="searchAllBtn" class="btn">전체조회</div>
+				<div id="allTable">
+					<table>
+						<tbody> 
+							<tr>
+								<th>도서코드</th>
+								<th>제목</th>
+								<th>작가</th>
+								<th>카테고리</th>
+							</tr>
+							<tr>
+								<td>cde5511d-e4e4-4164-b24a-6746d4341459</td>
+								<td>어린왕자</td>
+								<td>생택쥐 페리</td>
+								<td>한음사</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</dd>
+			
+			<dt>도서 검색</dt>
+			<dd>
+				도서키 입력 : <input id="searchKey" name="searchKey" /> 
+				<div id="searchBtn" class="btn">검색</div>
+				<div id="searchTable" style="display: none;">
+					<table>
+						<tbody> 
+							<tr>
+								<th>도서코드</th>
+								<th>제목</th>
+								<th>작가</th>
+								<th>카테고리</th>
+							</tr>
+							<tr>
+								<td>sdfsdfs</td>
+								<td>어린왕자</td>
+								<td>생택쥐 페리</td>
+								<td>한음사</td>
+							</tr>
+						</tbody>
+					</table>
+					<div id="exitBtn" class="btn">닫기</div>
+				</div>
+			</dd>
+			
+			<dt>도서 추가</dt>
+			<dd>
+				제목 : <input id="insertBookName" name="bookName" /> <br/> <br/>
+				작가명 : <input id="insertWriter" name="writer" /> <br/> <br/>
+				카테고리 : <input id="insertCategory" name="category" /> <br/> <br/>
+				<div id="insertBtn" class="btn">도서 추가</div>
+			</dd>
+			
+			<dt>도서 수정</dt>
+			<dd>
+				도서코드 : <input id="updateBookKey" name="bookKey" /> <br/> <br/>
+				제목 : <input id="updateBookName" name="bookName" /> <br/> <br/>
+				작가명 : <input id="updateWriter" name="writer" /> <br/> <br/>
+				카테고리 : <input id="updateCategory" name="category" /> <br/>
+				<div id="updateBtn" class="btn">정보 수정</div>
+			</dd>
+			
+			<dt>도서 삭제</dt>
+			<dd>
+				도서코드 : <input id="deleteBookKey" name="bookKey" /> <br/>
+				<div id="deleteBtn" class="btn">도서 삭제</div>
+			</dd>
+		</ul>
+	</div>
+	
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		
+		// 전체조회 
+		$("#searchAllBtn").on("click", function(){
+			$.ajax({
+				url:"/library",
+				type:"GET",
+				success: function(data){
+					console.log(data);
+				},
+				error: function(data){
+					console.log(data);
+				}
+				
+			});
+			
+		});
+		
+		
+		// 도서검색
+		$("#searchBtn").on("click", function(){
+			
+			let bookKey = $("#searchKey").val();
+			
+			$.ajax({
+				url:"/library/"+bookKey,
+				type:"GET",
+				data:{bookKey:bookKey},
+				success: function(data){
+					console.log(data);
+				},
+				error: function(data){
+					console.log(data);
+				}
+			});
+			
+		});
+		
+		// 도서추가
+		$("#insertBtn").on("click", function(){
+			
+			let bookName = $("#insertBookName").val();
+			let writer = $("#insertWriter").val();
+			let category = $("#insertCategory").val();
+			
+			$.ajax({
+				url:"library",
+				type:"POST",
+				data:{bookName:bookName,
+					  writer:writer,
+					  category:category},
+				success: function(data){
+					console.log(data);
+				},
+				error: function(data){
+					console.log(data);
+				}
+			});
+			
+		});
+		
+		// 도서수정
+		$("#updateBtn").on("click", function(){
+			
+			let bookKey = $("#updateBookKey").val();
+			let bookName = $("#updateBookName").val();
+			let writer = $("#updateWriter").val();
+			let category = $("#updateCategory").val();
+			
+			$.ajax({
+				url:"library",
+				type:"PUT",
+				data:{bookKey:bookKey,
+					  bookName:bookName,
+					  writer:writer,
+					  category:category},
+				success: function(data){
+					console.log(data);
+				},
+				error: function(data){
+					console.log(data);
+				}
+			});
+			
+		});
+		
+		// 도서삭제
+		$("#deleteBtn").on("click", function(){
+			
+			let bookKey = $("#deleteBookKey").val();
+			
+			$.ajax({
+				url:"library/"+bookKey,
+				type:"DELETE",
+				data:{bookKey:bookKey},
+				success: function(data){
+					console.log(data);
+				},
+				error: function(data){
+					console.log(data);
+				}
+			});
+			
+		});
+		
+		
+		
+		
+		
+	});
+</script>
+</html>
+
+
+
+
