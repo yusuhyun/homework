@@ -1,0 +1,14 @@
+json 생성
+var homework ={val1 : "값1", val2:"값2"};
+
+값 추가 
+homework.val3='값3';
+homework = {val1: '값1', val2: '값2', val3: '값3'}
+
+값 삭제 
+delete homework.val2;
+homework = {val1: '값1', val3: '값3'}
+
+값 수정 
+homework.val3 = '값33';
+homework = {val1: '값1', val3: '값33'}
