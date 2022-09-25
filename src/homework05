@@ -115,9 +115,10 @@ where deptno = 10 or deptno = 30
 order by "이름";
 
 -- 3) 조회 컬럼명에 대한 인덱스번호로  정렬 조회
-select /*+ INDEX(e EMP_idx) */ ename "이름", deptno "부서번호"
-from emp e
-where deptno = 10 or deptno = 30;
+select ename "이름", deptno "부서번호"
+from emp
+where deptno = 10 or deptno = 30
+order by 1;
 
 
 -- ## SQL 비교연산자 조건 검색
